@@ -154,7 +154,12 @@
 
 	<cffunction name="setRuleValidators" returntype="void" access="private" output="false" hint="I create rule validator objects from a list of component paths">
 		
-		<cfset var initArgs = {messageHelper=variables.messageHelper,defaultFailureMessagePrefix=variables.defaultFailureMessagePrefix,vtFolder=variables.vtFolder} />
+		<cfset var initArgs = {
+			messageHelper=variables.messageHelper,
+			defaultFailureMessagePrefix=variables.defaultFailureMessagePrefix,
+			vtFolder=variables.vtFolder,
+			fileUploadUtil=variables.fileUploadUtil
+		} />
 		<cfset variables.RuleValidators = variables.childObjectFactory.loadChildObjects(variables.vtFolder & ".server,#variables.ExtraRuleValidatorComponentPaths#","ServerRuleValidator_",structNew(),initArgs) />
 
 	</cffunction>

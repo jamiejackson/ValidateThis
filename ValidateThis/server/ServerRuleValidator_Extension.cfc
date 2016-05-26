@@ -1,7 +1,7 @@
 component
 	output="false"
 	name="ServerRuleValidator_Extension"
-	extends="AbstractServerRuleValidator"
+	extends="AbstractServerRuleValidator_Upload"
 	hint="I am responsible for performing the Extension validation."
 {
 
@@ -25,8 +25,8 @@ component
 		var isValid = true;
 		if ( len(trim(theValue)) > 0 ) {
 			var formFieldName = validation.getClientFieldName();
-			var fileName = getUploadFileName(formFieldName);
-			var fileExtension = getFileExtension(fileName);
+			var fileName = getFileUploadUtil().getUploadFileName(formFieldName);
+			var fileExtension = getFileUploadUtil().getFileExtension(fileName);
 			var validFileExtensions = parameters.extension;
 			
 			isValid = listFind(
@@ -40,52 +40,5 @@ component
 			fail(arguments.validation,variables.messageHelper.getGeneratedFailureMessage("defaultMessage_Extension",args,arguments.locale));
 		}
 	}
-
-	private string function getFileExtension(
-		required string fileName hint="File name from which to get an extension."
-	) 
-		hint="Gets file extension from a file name."
-	{
-		if(find(".",fileName)) return listLast(fileName,".");
-		else return "";
-	}
 	
-	private string function getUploadFileName(
-		required string formFieldName hint="Field name from which to get a file name."
-	)
-		hint="Gets the file name of an upload file."
-	{
-		if ( listFindNoCase("railo,lucee", server.coldfusion.productname) ) {
-			return getUploadFileNameLucee(formFieldName);
-		} else {
-			return getUploadFileNameACF(formFieldName);
-		}
-	}
-	
-	private string function getUploadFileNameLucee(
-		required string formFieldName hint="Field name from which to get a file name."
-	)
-		hint="Gets the file name of an upload file. (Lucee version.)"
-	{
-		return getPageContext().formScope().getUploadResource(formFieldName).getName();
-	}
-	
-	// FIXME: untested (i don't have acf handy)
-	private string function getUploadFileNameACF(
-		required string formFieldName hint="Field name from which to get a file name."
-	)
-		hint="Gets the file name of an upload file. (Adobe ColdFusion version.)"
-	{
-		var fileName = "";
-		var parts = form.getPartsArray();
-		if ( isDefined("parts") ) {
-			for ( var part in parts ) {
-				if ( part.isFile() and part.getName() eq formFieldName ) {
-					fileName = part.getFileName();
-				}
-			}
-		}
-		return fileName;
-	}
-
 }

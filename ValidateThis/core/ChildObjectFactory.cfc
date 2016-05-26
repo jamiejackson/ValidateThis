@@ -37,7 +37,7 @@
 			<cfset componentPath = childPath & "." />
 			<cfset objNames = variables.fileSystem.listFiles(actualPath)/>
 			<cfloop list="#objNames#" index="obj">
-				<cfif ListLast(obj,".") EQ "cfc" AND obj CONTAINS arguments.fileNamePrefix>
+				<cfif reFindNoCase("^#arguments.fileNamePrefix#.*\.cfc$", obj) GT 0 >
 					<cftry>
 						<cfset arguments.childCollection[replaceNoCase(ListLast(obj,"_"),".cfc","")] = CreateObject("component",componentPath & ReplaceNoCase(obj,".cfc","")).init(argumentCollection=arguments.initArguments) />
 						<cfcatch type="any">
