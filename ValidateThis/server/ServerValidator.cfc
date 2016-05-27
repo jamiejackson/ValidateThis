@@ -26,6 +26,7 @@
 		<cfargument name="defaultFailureMessagePrefix" type="string" required="true" />
 		<cfargument name="vtFolder" type="string" required="true" />
 		<cfargument name="defaultLocale" type="string" required="true" />
+		<cfargument name="fileUploadUtil" type="any" required="true" />
 		
 		<cfset variables.childObjectFactory = arguments.childObjectFactory />
 		<cfset variables.TransientFactory = arguments.TransientFactory />
@@ -37,6 +38,7 @@
 		<cfset variables.defaultFailureMessagePrefix = arguments.defaultFailureMessagePrefix />
 		<cfset variables.vtFolder = arguments.vtFolder />
 		<cfset variables.defaultLocale = arguments.defaultLocale />
+		<cfset variables.fileUploadUtil = arguments.fileUploadUtil />
 
 		<cfset setRuleValidators() />
 				
