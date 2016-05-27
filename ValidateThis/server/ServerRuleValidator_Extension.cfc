@@ -5,12 +5,15 @@ component
 	hint="I am responsible for performing the Extension validation."
 {
 
-	public any function validate(
-		required any validation hint="The validation object created by the business object being validated.",
-		required string locale hint="The locale to use to generate the default failure message."
-	)
-		hint = "I perform the validation returning info in the validation object."
-	{
+	/**
+	 * @hint I perform the validation returning info in the validation object.
+	 * @validation The validation object created by the business object being validated.
+	 * @locale The locale to use to generate the default failure message.
+	 **/
+	public any function validate (
+		required any validation,
+		required string locale
+	){
 		var parameters = arguments.validation.getParameters();
 		var theValue = arguments.validation.getObjectValue();
 		var args = [arguments.validation.getPropertyDesc()];

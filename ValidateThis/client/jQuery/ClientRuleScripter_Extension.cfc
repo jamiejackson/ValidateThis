@@ -5,12 +5,15 @@ component
 	hint="I am responsible for generating JS code for the extension validation."
 {
 
+	/**
+	 * @hint I return just the rule definition which is required for the generateAddRule method.
+	 * @validation The validation object that describes the validation.
+	 * @parameters The parameters stored in the validation object.
+	 **/
 	public any function getRuleDef(
-		required any validation hint="The validation object that describes the validation.",
-		required any parameters hint="The parameters stored in the validation object."
-	)
-		hint="I return just the rule definition which is required for the generateAddRule method."
-	{
+		required any validation,
+		required any parameters
+	){
 		var parameterDef = getParameterDef(arguments.validation);
 		if ( arguments.validation.hasParameter("extension") ) {
 			var ruleDef = '"#getValType()#":"#arguments.validation.getParameterValue("extension")#"';
