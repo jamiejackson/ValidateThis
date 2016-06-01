@@ -9,7 +9,7 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
     }
 
     private string function errLocator(name) {
-    	return "css=p.errorField[htmlfor=#arguments.name#]";
+    	return "id=" & arguments.name & "-error";
     }
 
     public void function RunQUnitTests() {
