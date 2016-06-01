@@ -21,7 +21,7 @@
 			VTConfig = {definitionPath="/validatethis/unitTests/Fixture"};
 			ValidateThis = CreateObject("component","ValidateThis.ValidateThis").init(VTConfig);
 			JSLib = "jQuery";
-			ExpectedInJSIncludes = '<script src="//ajax.microsoft.com/ajax/jquery/jquery';
+			ExpectedInJSIncludes = '<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery';
 			ExpectedInVTSetup = '$.validator.addMethod("regex",function(v,e,p)';
 		</cfscript>
 	</cffunction>
