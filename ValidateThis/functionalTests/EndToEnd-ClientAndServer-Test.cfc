@@ -3,7 +3,7 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
     public void function beforeTests() {
         baseurl = "http://#cgi.server_name#:#cgi.server_port#";
         browserUrl = "#variables.baseurl#/samples/FacadeDemo/";
-        super.beforeTests();
+        super.beforeTests(version=1, browserUrl=browserUrl);
         selenium.setTimeout(30000);
         crlf = chr(10);
     }
