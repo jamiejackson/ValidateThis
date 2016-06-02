@@ -28,10 +28,10 @@
 			var $compareto = $(p,$parentForm);
 			// bind to the blur event of the target in order to revalidate whenever the target field is updated
 			// TODO find a way to bind the event just once, avoiding the unbind-rebind overhead
-			$compareto.unbind(".validate-equalTo").bind("blur.validate-equalTo",function(){
+			var target = $compareto.unbind(".validate-equalTo").bind("blur.validate-equalTo",function(){
 				$(e).valid();
 			});
-			return v==$(e).val();
+			return v==target.getValue();
 		}
 		</cfsavecontent>
 		
@@ -52,11 +52,6 @@
 		<cfset var args = [variables.defaultFailureMessagePrefix,arguments.parameters.ComparePropertyDesc] />
 		<cfreturn args />
 		
-	</cffunction>
-	
-	<cffunction name="getValType" returntype="string" access="private" output="false" hint="I generate the JS script required to implement a validation.">
-		<!--- Without this, the super.getValType will yield "equalto" (note case) which doesn't match what jQuery validator expects. --->
-		<cfreturn "equalTo" />
 	</cffunction>
 
 </cfcomponent>
