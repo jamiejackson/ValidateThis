@@ -9,7 +9,8 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
     }
 
     private string function errLocator(name) {
-    	return "id=" & arguments.name & "-error";
+    	var selector = "id=" & arguments.name & "-error";
+    	return selector;
     }
 
     public void function RunQUnitTests() {
@@ -51,6 +52,7 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
         assertEquals("", selenium.getText(errLocator("UserName")));
         selenium.type("Nickname", "different");
         selenium.typeKeys("Nickname", "different");
+        
         selenium.type("UserPass", "a");
         selenium.typeKeys("UserPass", "a");
         selenium.type("VerifyPassword", "b");
@@ -387,27 +389,28 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
         selenium.type("VerifyPassword", "a,b");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertEquals("The Verify Password size is not between 3 and 10.", selenium.getText("error-VerifyPassword"));
+        assertEquals("The Verify Password must be the same as the Password.", selenium.getText("error-VerifyPassword"));
         selenium.type("VerifyPassword", "a,b,c");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertFalse(selenium.isElementPresent("error-VerifyPassword"));
+        writeDump(var="got here c1", output="console");
+        assertTrue(selenium.isElementPresent("error-VerifyPassword"));
         selenium.type("VerifyPassword", "structbad");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertEquals("The Verify Password size is not between 3 and 10.", selenium.getText("error-VerifyPassword"));
+        assertEquals("The Verify Password must be the same as the Password.", selenium.getText("error-VerifyPassword"));
         selenium.type("VerifyPassword", "structok");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertFalse(selenium.isElementPresent("error-VerifyPassword"));
+        assertTrue(selenium.isElementPresent("error-VerifyPassword"));
         selenium.type("VerifyPassword", "arraybad");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertEquals("The Verify Password size is not between 3 and 10.", selenium.getText("error-VerifyPassword"));
+        assertEquals("The Verify Password must be the same as the Password.", selenium.getText("error-VerifyPassword"));
         selenium.type("VerifyPassword", "arrayok");
         selenium.click("//button[@type='submit']");
         selenium.waitForPageToLoad("30000");
-        assertFalse(selenium.isElementPresent("error-VerifyPassword"));
+        assertTrue(selenium.isElementPresent("error-VerifyPassword"));
     }
     
 }
