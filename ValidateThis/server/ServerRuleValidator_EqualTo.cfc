@@ -19,7 +19,7 @@
 		<cfargument name="validation" type="any" required="yes" hint="The validation object created by the business object being validated." />
 		<cfargument name="locale" type="string" required="yes" hint="The locale to use to generate the default failure message." />
 
-
+		<cfset var theVal = arguments.validation.getObjectValue()/>
 		<cfset var otherPropertyName = arguments.validation.getParameterValue("ComparePropertyName") />
 		<cfset var otherVal = arguments.validation.getObjectValue(otherPropertyName) />
 		<cfset var otherDesc = arguments.validation.getParameterValue("ComparePropertyDesc","") />
@@ -28,7 +28,13 @@
 		<cfif len(otherDesc) eq 0>
 			<cfset otherDesc = arguments.validation.getValidateThis().getPropertyDescription(objectType=arguments.validation.getObjectType(),propertyName="otherPropertyName") />
 		</cfif>
-		<cfif arguments.validation.getObjectValue() NEQ otherVal>
+		
+		<cfset var doFail = false />
+		<cfif !isSimpleValue(theVal) >
+			<cfset doFail = true />
+		</cfif>
+		
+		<cfif doFail or (theVal NEQ otherVal) >
 			<cfset arrayAppend(args,otherDesc) />
 			<cfset fail(arguments.validation,variables.messageHelper.getGeneratedFailureMessage("defaultMessage_EqualTo",args,arguments.locale)) />
 		</cfif>
