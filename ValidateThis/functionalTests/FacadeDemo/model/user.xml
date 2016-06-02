@@ -50,9 +50,8 @@
 			<rule type="false" />
 		</property>
 		<property name="VerifyPassword">
-			<rule type="collectionSize" contexts="newValidations-server">
-				<param name="min" value="3" />
-				<param name="max" value="10" />
+			<rule type="equalTo" contexts="*">
+				<param name="ComparePropertyName" value="UserPass" />
 			</rule>
 		</property>
 		<property name="UserGroup" clientfieldname="UserGroupId">
