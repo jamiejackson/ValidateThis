@@ -9,11 +9,11 @@
 	<script type="text/javascript" src="qunit/qunit.js"></script>
 	<!-- Your project file goes here -->
 	#ValidateThis.getInitializationScript()#
-	<script type="text/javascript">
+				<script type="text/javascript">
 	jQuery(function($) {
 		/* --------------- HELPER METHODS --------------- */
 		function methodTest( methodName ) {
-			var v = $("##form").validate();
+			var v = $("##test-form").validate();
 			var method = $.validator.methods[methodName];
 			var element = $("##firstname")[0];
 			return function(value, param) {
@@ -46,7 +46,7 @@
 		});
 		
 		test("DoesNotContainOtherProperties", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["doesnotcontainotherproperties"], 
 				param = ['firstname','lastname'],
 				e = $("##password")[0];
@@ -73,7 +73,7 @@
 		});
 		
 		test("equalTo", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods.equalTo,
 				e = $('##firstname, ##lastname');
 			
@@ -120,7 +120,7 @@
 		
 		
 		test("minpatternsmatch", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["minpatternsmatch"]; 
 			var param = {
 				minMatches:3,
@@ -174,7 +174,7 @@
 		});
 		
 		test("regex", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["regex"]; 
 			var param = "^(Dr|Prof|Mr|Mrs|Ms|Miss)(\.)?$";
 			var e = $("##firstname")[0];
@@ -191,7 +191,7 @@
 		});
 		
 		test("notregex", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["notregex"]; 
 			var param = "[,\.\*]+";
 			var e = $("##firstname")[0];
@@ -211,7 +211,7 @@
 		module("inlist");
 		
 		test("no delimiter,('milk,cookies,ice cream')", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["inlist"], 
 				param = {list:"milk,cookies,ice cream"},
 				e = $("##firstname")[0];
@@ -228,7 +228,7 @@
 		
 		test("',' delimiter,('milk,cookies,ice cream')", function(){
 			// test again with delimiter
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["inlist"], param = {
 				list: "milk,cookies,ice cream",
 				delim: ','
@@ -247,7 +247,7 @@
 		test("'^' delimiter,('milk^cookies^ice cream')", function() {
 			
 			// test again with different delimiter
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["inlist"];
 			
 			var e = $("##firstname")[0];
@@ -268,7 +268,7 @@
 		module("notinlist");
 		
 		test("no delimiter,('milk,cookies,ice cream')", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["notinlist"], 
 				param = {list:"milk,cookies,ice cream"},
 				e = $("##firstname")[0];
@@ -285,7 +285,7 @@
 		
 		test("',' delimiter,('milk,cookies,ice cream')", function() {		
 			// test again with delimiter
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["notinlist"], 
 				param = {list:"milk,cookies,ice cream",delim:','},
 				e = $("##firstname")[0];
@@ -303,7 +303,7 @@
 		
 		test("'^' delimiter,('milk^cookies^ice cream')", function() {	
 			// test again with different delimiter
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["notinlist"], 
 				param = {list:"milk^cookies^ice cream",delim:'^'},
 				e = $("##firstname")[0];
@@ -322,7 +322,7 @@
 		module("date validators");
 		
 		test("futuredate", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["futuredate"], 
 				param = {},
 				e = $("##firstname")[0];
@@ -341,7 +341,7 @@
 				ok( !method.call( v, value, e, param ), testedvalue(false,value) );
 			});
 
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["futuredate"], 
 				param = {after:tomorrow},
 				e = $("##firstname")[0];
@@ -363,7 +363,7 @@
 <cfset dayaftertomorrow = DateAdd('d', 2, today)>
 		
 		test("pastdate (no param)", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["pastdate"], 
 				param = {},
 				e = $("##firstname")[0];
@@ -384,13 +384,13 @@
 		});
 			
 		test("pastdate (after:'#DateFormat(tomorrow,'yyyy/mm/dd')#')", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["pastdate"], 
 				param = {},
 				e = $("##firstname")[0];
 
 
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["futuredate"], 
 				param = {after:'#DateFormat(tomorrow, "yyyy/mm/dd")#'},
 				e = $("##firstname")[0];
@@ -407,7 +407,7 @@
 		
 		module("daterange");
 		test("from:'12/29/1968', until:'1/1/1969'", function() {
-			var v = jQuery("##form").validate();
+			var v = jQuery("##form-test").validate();
 			var method = $.validator.methods["daterange"], 
 				param = {from:'12/29/1968', until:'1/1/1969'},
 				e = $("##firstname")[0];
@@ -426,17 +426,14 @@
 	</script>
 </head>
 <body>
-	<h1 id="qunit-header">QUnit Test Suite</h1>
-	<h2 id="qunit-banner"></h2>
-	<div id="qunit-testrunner-toolbar"></div>
-	<h2 id="qunit-userAgent"></h2>
-	<ol id="qunit-tests"></ol>
-	
-	<form style="display:none;">
-		<input type="text" id="firstname" name="firstname">
-		<input type="text" id="lastname" name="lastname">
-		<input type="text" id="password" name="password">
-	</form>
+	<div id="qunit"></div>
+	<div id="qunit-fixture">
+		<form style="display:none;" id="form-test">
+			<input type="text" id="firstname" name="firstname">
+			<input type="text" id="lastname" name="lastname">
+			<input type="text" id="password" name="password">
+		</form>
+	</div>
 </body>
 </html>
 </cfoutput>
