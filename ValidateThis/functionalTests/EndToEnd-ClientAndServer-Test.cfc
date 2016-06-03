@@ -30,16 +30,15 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
 
 	/*******************  UPLOADS *********************************************/
 	private void function setupUploadTest(string clientOrServer = "client" ) {
-		var url = "#variables.baseUrl#/validatethis/samples/StructureDemo/index.cfm?init=true";
-		url &= "&noJS=#(clientOrServer is 'server'?'true':'false')#";
-		selenium.open("#url#");
+		var uri = "#variables.baseUrl#/validatethis/samples/StructureDemo/index.cfm?init=true";
+		uri &= "&noJS=#(clientOrServer is 'server'?'true':'false')#";
+		selenium.open("#uri#");
 		selenium.waitForPageToLoad("30000");
 		assertEquals("ValidateThis Demo Page", selenium.getTitle());
 		selenium.type("UserName", "f@f.bar");
-		selenium.type("UserPass", clientOrServer);
-		selenium.type("VerifyPassword", clientOrServer);
+		selenium.type("UserPass", "foobar");
+		selenium.type("VerifyPassword", "foobar");
 		selenium.select("UserGroupId", "label=Member");
-		selenium.type("Salutation", url);
 		selenium.click("LikeCheese-1");
 		selenium.select("CommunicationMethod", "label=Email");
 	}
