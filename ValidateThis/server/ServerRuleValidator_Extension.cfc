@@ -31,15 +31,17 @@ component
 			var fileName = getFileUploadUtil().getUploadFileName(formFieldName);
 			var fileExtension = getFileUploadUtil().getFileExtension(fileName);
 			var validFileExtensions = parameters.extension;
-			
+
 			isValid = listFind(
 				validFileExtensions,
 				fileExtension,
 				"|"
 			);
+		} else if (shouldTest(arguments.validation)) { // required and empty
+			isValid = false;
 		}
 		
-		if ( shouldTest(arguments.validation) AND !isValid ) {
+		if ( !isValid ) {
 			fail(arguments.validation,variables.messageHelper.getGeneratedFailureMessage("defaultMessage_Extension",args,arguments.locale));
 		}
 	}
