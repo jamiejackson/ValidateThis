@@ -95,7 +95,7 @@
 <h3>#PageHeading# (JavaScript Validations are <cfif Form.NoJS>OFF<cfelse>ON</cfif>)</h3>
 <cfif Len(SuccessMessage)><h3 id="successMessage">#SuccessMessage#</h3></cfif>
 <div class="formContainer">
-<form action="index.cfm" id="frmMain" method="post" name="frmMain" class="uniForm">
+<form action="index.cfm" id="frmMain" method="post" name="frmMain" class="uniForm" enctype="multipart/form-data">
 	<input type="hidden" name="ObjectType" id="ObjectType" value="user" />
 	<input type="hidden" name="Context" id="Context" value="#Form.Context#" />
 	<input type="hidden" name="NoJS" id="NoJS" value="#Form.NoJS#" />
@@ -143,7 +143,7 @@
 		<div class="ctrlHolder">
 			#isErrorMsg("Salutation")#
 			<label for="Salutation">#isRequired("Salutation")#Salutation</label>
-			<input name="Salutation" id="Salutation" value="#form.Salutation#" size="35" maxlength="50" type="text" class="textInput" />
+			<input name="Salutation" id="Salutation" value="#form.Salutation#" size="35" maxlength="800" type="text" class="textInput" />
 			<p class="formHint">Validations: A regex ensures that only Dr, Prof, Mr, Mrs, Ms, or Miss (with or without a period) are allowed.</p>
 		</div>
 		<div class="ctrlHolder">
@@ -200,7 +200,23 @@
 			<p class="formHint">Validations: Required if Allow Communication? is true.</p>
 		</div>
 	</fieldset>
-
+	
+	<fieldset class="inlineLabels">
+		<legend>Uploads</legend>
+		<div class="ctrlHolder">
+			#isErrorMsg("extension_test")#
+			<label for="extension_test">#isRequired("extension_test")#Extension Test</label>
+			<input name="extension_test" id="extension_test" type="file" />
+			<p class="formHint">Validations: Only *.pdf or *.txt files are allowed.</p>
+		</div>
+		<div class="ctrlHolder">
+			#isErrorMsg("mime_type_test")#
+			<label for="mime_type_test">#isRequired("mime_type_test")#Mime Type Test</label>
+			<input name="mime_type_test" id="mime_type_test" type="file" />
+			<p class="formHint">Validations: Only *.pdf or *.txt files are allowed.</p>
+		</div>
+	</fieldset>
+	
 	<div class="buttonHolder">
 		<button type="submit" class="submitButton"> Submit </button>
 	</div>

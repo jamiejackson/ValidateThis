@@ -8,10 +8,18 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
         crlf = chr(10);
     }
 
-    private string function errLocator(name) {
-    	var selector = "id=" & arguments.name & "-error";
-    	return selector;
-    }
+	private string function errLocator(name, string clientOrServer = "client") {
+		// TODO: why are client and server different? is that a VT mistake?
+		var locator = "id=";
+		if (clientOrServer == "server") {
+			locator &= "error-";
+		}
+		locator &= arguments.name;
+		if (clientOrServer == "client") {
+			locator &= "-error";
+		}
+		return locator;
+	}
 
     public void function RunQUnitTests() {
         selenium.open("#variables.baseUrl#/validatethis/unitTests/qunit/clientsidevalidators.cfm");
@@ -20,6 +28,55 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
         assertEquals("0", selenium.getText("css=span.failed"),"There seem to be QUnit test failures!");
     }
 
+	/*******************  UPLOADS *********************************************/
+	private void function setupUploadTest(string clientOrServer = "client" ) {
+		var url = "#variables.baseUrl#/validatethis/samples/StructureDemo/index.cfm?init=true";
+		url &= "&noJS=#(clientOrServer is 'server'?'true':'false')#";
+		selenium.open("#url#");
+		selenium.waitForPageToLoad("30000");
+		assertEquals("ValidateThis Demo Page", selenium.getTitle());
+		selenium.type("UserName", "f@f.bar");
+		selenium.type("UserPass", clientOrServer);
+		selenium.type("VerifyPassword", clientOrServer);
+		selenium.select("UserGroupId", "label=Member");
+		selenium.type("Salutation", url);
+		selenium.click("LikeCheese-1");
+		selenium.select("CommunicationMethod", "label=Email");
+	}
+	
+	private void function uploadExtension_goodExtensionPasses(string clientOrServer = "client") {
+		setupUploadTest(clientOrServer);
+		selenium.type("extension_test", expandPath("/validatethis/functionalTests/uploads/fake.pdf"));
+		selenium.click("//button[@type='submit']");
+		assertFalse(selenium.isElementPresent(errLocator("extension_test", clientOrServer)));
+	}
+	
+	private void function uploadExtension_badExtensionFails(string clientOrServer = "client") {
+		setupUploadTest(clientOrServer);
+		var errorLocator = errLocator("extension_test", clientOrServer);
+		selenium.type("extension_test", expandPath("/validatethis/functionalTests/uploads/fake.odd"));
+		selenium.click("//button[@type='submit']");
+		selenium.waitForElementPresent(errorLocator);
+		assertEquals("The Extension Test must have a valid extension.", selenium.getText(errorLocator));
+	}
+
+	public void function uploadExtension_client_goodExtensionPasses() {
+		uploadExtension_goodExtensionPasses("client");
+	}
+
+	public void function uploadExtension_client_badExtensionFails() {
+		uploadExtension_badExtensionFails("client");
+	}
+
+	public void function uploadExtension_server_goodExtensionPasses() {
+		uploadExtension_goodExtensionPasses("client");
+	}
+	
+	public void function uploadExtension_server_badExtensionFails() {
+		uploadExtension_badExtensionFails("server");
+	}
+	/**************************************************************************/
+	
     public void function testEndToEndClient() {
         selenium.open("#variables.baseUrl#/validatethis/samples/FacadeDemo/index.cfm?init=true");
         selenium.waitForPageToLoad("30000");

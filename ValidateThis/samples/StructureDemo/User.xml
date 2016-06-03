@@ -65,5 +65,15 @@
 				<param name="DependentPropertyValue" value="1" />
 			</rule>
 		</property>
+		<property name="extension_test" desc="Extension Test">
+			<rule type="extension" contexts="*">
+				<param name="extension" value="pdf|txt" />
+			</rule>
+		</property>
+		<property name="mime_type_test" desc="Mime Type Test">
+			<rule type="accept" contexts="*">
+				<param name="accept" value="application/pdf" />
+			</rule>
+		</property>
 	</objectProperties>
 </validateThis>
