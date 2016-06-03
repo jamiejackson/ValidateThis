@@ -36,6 +36,8 @@ component
 				fileMimeType,
 				"|"
 			);
+		} else if (shouldTest(arguments.validation)) { // required and empty
+			isValid = false;
 		}
 		
 		if ( shouldTest(arguments.validation) AND !isValid ) {
