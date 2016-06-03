@@ -44,36 +44,67 @@ component extends="cfselenium.CFSeleniumTestCase" displayName="EndToEndTests" {
 		selenium.select("CommunicationMethod", "label=Email");
 	}
 	
-	private void function uploadExtension_goodExtensionPasses(string clientOrServer = "client") {
+	private void function upload_goodPasses(
+		required string clientOrServer,
+		required string acceptOrExtension
+	) {
 		setupUploadTest(clientOrServer);
-		selenium.type("extension_test", expandPath("/validatethis/functionalTests/uploads/fake.pdf"));
+		var fieldName = "file_upload_#acceptOrExtension#_test";
+		var errorLocator = errLocator(fieldName, clientOrServer);
+		selenium.type(fieldName, expandPath("/validatethis/functionalTests/uploads/fake.pdf"));
 		selenium.click("//button[@type='submit']");
-		assertFalse(selenium.isElementPresent(errLocator("extension_test", clientOrServer)));
+		assertFalse(selenium.isElementPresent(errorLocator));
 	}
 	
-	private void function uploadExtension_badExtensionFails(string clientOrServer = "client") {
+	private void function upload_badFails(
+		required string clientOrServer,
+		required string acceptOrExtension
+	) {
+		var expectedErrorMessage = "";
+		if (acceptOrExtension is "accept") {
+			expectedErrorMessage = "The Mime Type Test must have a valid file type.";
+		} else {
+			expectedErrorMessage = "The Extension Test must have a valid extension.";
+		}
 		setupUploadTest(clientOrServer);
-		var errorLocator = errLocator("extension_test", clientOrServer);
-		selenium.type("extension_test", expandPath("/validatethis/functionalTests/uploads/fake.odd"));
+		var fieldName = "file_upload_#acceptOrExtension#_test";
+		var errorLocator = errLocator(fieldName, clientOrServer);
+		selenium.type(fieldName, expandPath("/validatethis/functionalTests/uploads/fake.odd"));
 		selenium.click("//button[@type='submit']");
 		selenium.waitForElementPresent(errorLocator);
-		assertEquals("The Extension Test must have a valid extension.", selenium.getText(errorLocator));
+		assertEquals(expectedErrorMessage, selenium.getText(errorLocator));
 	}
 
 	public void function uploadExtension_client_goodExtensionPasses() {
-		uploadExtension_goodExtensionPasses("client");
+		upload_goodPasses("client","extension");
 	}
 
 	public void function uploadExtension_client_badExtensionFails() {
-		uploadExtension_badExtensionFails("client");
+		upload_badFails("client","extension");
 	}
 
 	public void function uploadExtension_server_goodExtensionPasses() {
-		uploadExtension_goodExtensionPasses("client");
+		upload_goodPasses("client","extension");
 	}
 	
 	public void function uploadExtension_server_badExtensionFails() {
-		uploadExtension_badExtensionFails("server");
+		upload_badFails("server","extension");
+	}
+	
+	public void function uploadAccept_client_goodMimeTypePasses() {
+		upload_goodPasses("client","accept");
+	}
+
+	public void function uploadAccept_client_badMimeTypeFails() {
+		upload_badFails("client","accept");
+	}
+
+	public void function uploadAccept_server_goodMimeTypePasses() {
+		upload_goodPasses("client","accept");
+	}
+	
+	public void function uploadAccept_server_badMimeTypeFails() {
+		upload_badFails("server","accept");
 	}
 	/**************************************************************************/
 	

@@ -204,15 +204,15 @@
 	<fieldset class="inlineLabels">
 		<legend>Uploads</legend>
 		<div class="ctrlHolder">
-			#isErrorMsg("extension_test")#
-			<label for="extension_test">#isRequired("extension_test")#Extension Test</label>
-			<input name="extension_test" id="extension_test" type="file" />
+			#isErrorMsg("file_upload_extension_test")#
+			<label for="file_upload_extension_test">#isRequired("file_upload_extension_test")#Extension Test</label>
+			<input name="file_upload_extension_test" id="file_upload_extension_test" type="file" />
 			<p class="formHint">Validations: Only *.pdf or *.txt files are allowed.</p>
 		</div>
 		<div class="ctrlHolder">
-			#isErrorMsg("mime_type_test")#
-			<label for="mime_type_test">#isRequired("mime_type_test")#Mime Type Test</label>
-			<input name="mime_type_test" id="mime_type_test" type="file" />
+			#isErrorMsg("file_upload_accept_test")#
+			<label for="file_upload_accept_test">#isRequired("file_upload_accept_test")#Mime Type Test</label>
+			<input name="file_upload_accept_test" id="file_upload_accept_test" type="file" />
 			<p class="formHint">Validations: Only *.pdf or *.txt files are allowed.</p>
 		</div>
 	</fieldset>
